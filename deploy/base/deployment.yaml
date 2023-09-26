@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: quarkus
+  labels:
+    app: quarkus
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: quarkus
+  template:
+    spec:
+      containers:
+      - name: quarkus
+        image: me-west1-docker.pkg.dev/koala-ops-demo-373407/koala-repo/quarkus:latest
+        resources:
+          requests:
+            cpu: 100m
+            memory: 200Mi
+          limits:
+            cpu: 500m
+            memory: 500Mi
+        ports:
+        - containerPort: 8080
+        envFrom:
+        - configMapRef:
+            name: quarkus-configmap
+    metadata:
+      labels:
+        app: quarkus
